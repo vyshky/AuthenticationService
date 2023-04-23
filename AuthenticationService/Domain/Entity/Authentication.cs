@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ChatServerApi.Domain.Entity
 {
-    public class User
+    public class UserEntity
     {
         public Guid Id { get; set; }
         [EmailAddress]
@@ -14,7 +14,7 @@ namespace ChatServerApi.Domain.Entity
     }
 
     [PrimaryKey(nameof(UserId))]
-    public class Identification
+    public class IdentificationEntity
     {
         public Guid UserId { get; set; }
         [Required]
@@ -28,7 +28,7 @@ namespace ChatServerApi.Domain.Entity
         [Required]
         public List<string> Roles { get; set; }
 
-        public Identification()
+        public IdentificationEntity()
         {
             Roles = new List<string>();
         }

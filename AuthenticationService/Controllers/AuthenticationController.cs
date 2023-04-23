@@ -23,7 +23,7 @@ namespace AuthenticationService.Controllers
         [HttpPost(nameof(CreateUser))]
         public IActionResult CreateUser([FromBody] CreateModel data)
         {
-            Identification ident = authService.CreateUser(data);
+            IdentificationEntity ident = authService.CreateUser(data);
             if (ident != null)
             {
                 return Ok(new { User = ident, Message = "Created User" });
@@ -34,7 +34,7 @@ namespace AuthenticationService.Controllers
         [HttpPost(nameof(GetToken))]
         public IActionResult GetToken([FromBody] LoginModel data)
         {
-            Identification ident = authService.IsValidUserInformation(data);
+            IdentificationEntity ident = authService.IsValidUserInformation(data);
             if (ident != null)
             {
                 var tokenString = token.Get(ident);

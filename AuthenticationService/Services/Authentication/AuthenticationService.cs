@@ -14,22 +14,22 @@ namespace AuthenticationService.Services.Authentication
             ApplicationDbContext = applicationDbContext;
         }
 
-        public Identification IsValidUserInformation(LoginModel data)
+        public IdentificationEntity IsValidUserInformation(LoginModel data)
         {
             return ApplicationDbContext.Identification.FirstOrDefault(x => x.Login == data.UserName && x.Password == data.Password);
         }
 
-        public Identification CreateUser(CreateModel data)
+        public IdentificationEntity CreateUser(CreateModel data)
         {
             Guid id = Guid.NewGuid();
-            User user = new User()
+            UserEntity user = new UserEntity()
             {
                 Id = id,
                 Email = data.Email,
                 CreatedDate = DateTime.UtcNow
             };
 
-            Identification identification = new Identification()
+            IdentificationEntity identification = new IdentificationEntity()
             {
                 UserId = id,
                 Login = data.UserName,

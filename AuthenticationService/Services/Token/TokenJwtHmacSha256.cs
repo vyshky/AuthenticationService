@@ -17,7 +17,7 @@ namespace AuthenticationService.Services.Token
             this.config = config;
         }
 
-        public string Get(Identification user)
+        public string Get(IdentificationEntity user)
         {
             string roles = string.Empty;
             List<Claim> claims = new List<Claim> {

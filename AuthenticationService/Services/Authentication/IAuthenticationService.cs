@@ -6,7 +6,7 @@ namespace AuthenticationService.Services.Authentication
 {
     public interface IAuthenticationService
     {
-        public Identification IsValidUserInformation(LoginModel data);
-        public Identification CreateUser(CreateModel data);
+        public IdentificationEntity IsValidUserInformation(LoginModel data);
+        public IdentificationEntity CreateUser(CreateModel data);
     }
 }

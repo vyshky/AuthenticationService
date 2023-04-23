@@ -5,8 +5,8 @@ namespace ChatServerApi.Domain
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<User> User { get; set; }
-        public DbSet<Identification> Identification { get; set; }
+        public DbSet<UserEntity> User { get; set; }
+        public DbSet<IdentificationEntity> Identification { get; set; }
 
 
         // конфигурация контекста
