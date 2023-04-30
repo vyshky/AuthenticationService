@@ -1,6 +1,6 @@
 ﻿using ChatServerApi.Domain.Entity;
 
-namespace AuthenticationService.Services.Token
+namespace AuthenticationService.Security.Token
 {
     public interface IToken
     {

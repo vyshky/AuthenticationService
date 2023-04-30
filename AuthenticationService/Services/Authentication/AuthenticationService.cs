@@ -1,22 +1,30 @@
 ﻿using AuthenticationService.Domain.Model;
 using AuthenticationService.Model;
+using AuthenticationService.Security.PasswordCrypt;
+using AuthenticationService.Security.Token;
 using ChatServerApi.Domain;
 using ChatServerApi.Domain.Entity;
-using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace AuthenticationService.Services.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
         ApplicationDbContext ApplicationDbContext { get; init; }
-        public AuthenticationService(ApplicationDbContext applicationDbContext)
+        IPasswordCrypt PasswordCrypt { get; set; }
+        IToken Token { get; set; }
+        public AuthenticationService(ApplicationDbContext applicationDbContext, IToken token, IPasswordCrypt passwordCrypt)
         {
             ApplicationDbContext = applicationDbContext;
+            Token = token;
+            PasswordCrypt = passwordCrypt;
         }
-
-        public IdentificationEntity IsValidUserInformation(LoginModel data)
+        // updatedatabase
+        public IdentificationEntity? FindUserOrDefault(LoginModel data)
         {
-            return ApplicationDbContext.Identification.FirstOrDefault(x => x.Login == data.UserName && x.Password == data.Password);
+            var result = ApplicationDbContext.Identification
+                .FirstOrDefault(x => x.Login == data.UserName);
+            return result != null && PasswordCrypt.Verify(data.Password, result.Password) ? result : null;
         }
 
         public IdentificationEntity CreateUser(CreateModel data)
@@ -33,14 +41,19 @@ namespace AuthenticationService.Services.Authentication
             {
                 UserId = id,
                 Login = data.UserName,
-                Password = data.Password,
+                Password = PasswordCrypt.HashPassword(data.Password),
                 Roles = data.Roles
             };
 
             ApplicationDbContext.User.Add(user);
-            ApplicationDbContext.Identification.Add(identification);
+            var ident = ApplicationDbContext.Identification.Add(identification);
             ApplicationDbContext.SaveChanges();
-            return identification;
+            return ident.Entity;
+        }
+
+        public string GetToken(IdentificationEntity identificationEntity)
+        {
+            return Token.Get(identificationEntity);
         }
     }
 }

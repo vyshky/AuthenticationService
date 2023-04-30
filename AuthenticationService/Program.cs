@@ -1,6 +1,7 @@
 using AuthenticationService.Options;
+using AuthenticationService.Security.PasswordCrypt;
+using AuthenticationService.Security.Token;
 using AuthenticationService.Services.Authentication;
-using AuthenticationService.Services.Token;
 using ChatServerApi.Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -20,6 +21,7 @@ builder.Services.AddOptions().Configure<OptionsJwtSecret>(x =>
 builder.Services.AddControllers();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService.Services.Authentication.AuthenticationService>();
 builder.Services.AddScoped<IToken, TokenJwtHmacSha256>();
+builder.Services.AddScoped<IPasswordCrypt, PasswordCrypt>();
 
 builder.Services.AddDbContext<ApplicationDbContext>();
 

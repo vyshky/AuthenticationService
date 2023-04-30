@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 using AuthenticationService.Options;
 using System.Text;
 
-namespace AuthenticationService.Services.Token
+namespace AuthenticationService.Security.Token
 {
     public class TokenJwtHmacSha256 : IToken
     {
@@ -23,12 +23,11 @@ namespace AuthenticationService.Services.Token
             List<Claim> claims = new List<Claim> {
                                              new Claim(ClaimsIdentity.DefaultIssuer, config.Value.Issuer),
                                              new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
-                                             //new Claim(ClaimsIdentity.DefaultRoleClaimType, roles)
+                                             new Claim("user_id", user.UserId.ToString())
             };
             for (int i = 0; i < user.Roles.Count; ++i)
             {
                 claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Roles[i]));
-                //roles += ", " + user.Roles[i];
             }
             JwtSecurityToken jwt = new JwtSecurityToken(
             issuer: config.Value.Issuer,
