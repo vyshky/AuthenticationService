@@ -1,7 +1,5 @@
 ﻿using AuthenticationService.Domain.Model;
 using AuthenticationService.Model;
-using AuthenticationService.Security.PasswordCrypt;
-using AuthenticationService.Security.Token;
 using AuthenticationService.Services.Authentication;
 using ChatServerApi.Domain.Entity;
 using Microsoft.AspNetCore.Authorization;
