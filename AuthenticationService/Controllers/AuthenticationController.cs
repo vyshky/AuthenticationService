@@ -35,15 +35,5 @@ namespace AuthenticationService.Controllers
                 Ok(new { Token = authService.GetToken(ident), Message = "Success" }) :
                 BadRequest("Please pass the valid Username and Password");
         }
-
-
-        [HttpPost(nameof(TestBearer))]
-        [Authorize(Roles = "admin,user")]
-        public IActionResult TestBearer()
-        {
-            return Ok("Success");
-        }
-
-
     }
 }
