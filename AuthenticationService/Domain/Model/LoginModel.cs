@@ -8,5 +8,10 @@ namespace AuthenticationService.Model
         public string UserName { get; set; }
         [Required]
         public string Password { get; set; }
+
+        public bool IsValid()
+        {
+            return UserName != string.Empty && Password != string.Empty;
+        }
     }
 }

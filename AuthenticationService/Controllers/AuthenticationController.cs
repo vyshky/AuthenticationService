@@ -30,6 +30,7 @@ namespace AuthenticationService.Controllers
         [HttpPost(nameof(GetToken))]
         public IActionResult GetToken([FromBody] LoginModel data)
         {
+            if(!data.IsValid()) return BadRequest("Please pass the valid Username and Password");
             IdentificationEntity ident = authService.FindUserOrDefault(data);
             return ident != null ?
                 Ok(new { Token = authService.GetToken(ident), Message = "Success" }) :
