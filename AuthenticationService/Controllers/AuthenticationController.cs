@@ -2,7 +2,7 @@
 using AuthenticationService.Model;
 using AuthenticationService.Services.Authentication;
 using ChatServerApi.Domain.Entity;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthenticationService.Controllers
@@ -26,7 +26,7 @@ namespace AuthenticationService.Controllers
                 Ok(new { User = ident, Message = "Success" }) :
                 BadRequest("Please pass the valid Username and Password");
         }
-
+                
         [HttpPost(nameof(GetToken))]
         public IActionResult GetToken([FromBody] LoginModel data)
         {
@@ -34,6 +34,13 @@ namespace AuthenticationService.Controllers
             return ident != null ?
                 Ok(new { Token = authService.GetToken(ident), Message = "Success" }) :
                 BadRequest("Please pass the valid Username and Password");
+        }
+        
+
+        [HttpGet(nameof(GetToken2))]
+        public IActionResult GetToken2()
+        {
+            return Ok(new { Token = "12312412", Message = "Success" });
         }
     }
 }

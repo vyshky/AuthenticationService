@@ -11,6 +11,18 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("https://spdfront.bsite.net")
+                                .WithHeaders("content-type");
+                          policy.AllowAnyMethod();
+                      });
+});
+
 builder.Services.AddOptions().Configure<OptionsJwtSecret>(x =>
 {
     x.Key = configuration["Jwt:Key"];
@@ -32,7 +44,7 @@ builder.Services.AddSwaggerGen(swagger =>
     {
         Version = "v1",
         Title = "JWT Token Authentication API",
-        Description = "ASP.NET Core 5.0 Web API"
+        Description = "ASP.NET Core 7.0 Web API"
     });
     // To Enable authorization using Swagger (JWT)
     swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -78,10 +90,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 var app = builder.Build();
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 //}
 
+app.UseCors(MyAllowSpecificOrigins);
 app.UseHsts();
 app.UseHttpsRedirection();
 app.UseAuthentication();
