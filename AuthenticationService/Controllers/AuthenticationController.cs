@@ -26,22 +26,15 @@ namespace AuthenticationService.Controllers
                 Ok(new { User = ident, Message = "Success" }) :
                 BadRequest("Please pass the valid Username and Password");
         }
-                
+
         [HttpPost(nameof(GetToken))]
         public IActionResult GetToken([FromBody] LoginModel data)
         {
-            if(!data.IsValid()) return BadRequest("Please pass the valid Username and Password");
+            if (!data.IsValid()) return BadRequest("Please pass the valid Username and Password");
             IdentificationEntity ident = authService.FindUserOrDefault(data);
             return ident != null ?
                 Ok(new { Token = authService.GetToken(ident), Message = "Success" }) :
                 BadRequest("Please pass the valid Username and Password");
-        }
-        
-
-        [HttpGet(nameof(GetToken2))]
-        public IActionResult GetToken2()
-        {
-            return Ok(new { Token = "12312412", Message = "Success" });
         }
     }
 }
