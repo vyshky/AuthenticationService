@@ -44,6 +44,9 @@ namespace AuthenticationService.Services.Authentication
                 Password = PasswordCrypt.HashPassword(data.Password),
                 Roles = data.Roles
             };
+            IdentificationEntity findUser = ApplicationDbContext.Identification
+                .FirstOrDefault(x => x.Login == data.UserName);
+            if (findUser != null) return null;
 
             ApplicationDbContext.User.Add(user);
             var ident = ApplicationDbContext.Identification.Add(identification);

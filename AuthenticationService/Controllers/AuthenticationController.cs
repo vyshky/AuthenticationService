@@ -24,7 +24,7 @@ namespace AuthenticationService.Controllers
             return
                 ident != null ?
                 Ok(new { User = ident, Message = "Success" }) :
-                BadRequest("Please pass the valid Username and Password");
+                BadRequest("Such user already exists");
         }
 
         [HttpPost(nameof(GetToken))]
