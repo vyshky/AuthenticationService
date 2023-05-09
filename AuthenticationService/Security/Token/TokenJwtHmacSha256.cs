@@ -9,7 +9,7 @@ using System.Text;
 
 namespace AuthenticationService.Security.Token
 {
-    public class TokenJwtHmacSha256 : IToken
+    public class TokenJwtHmacSha256 : IToken 
     {
         IOptions<OptionsJwtSecret> config;
         public TokenJwtHmacSha256(IOptions<OptionsJwtSecret> config)
