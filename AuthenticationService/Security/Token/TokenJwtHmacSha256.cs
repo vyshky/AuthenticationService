@@ -24,7 +24,7 @@ namespace AuthenticationService.Security.Token
                                              new Claim(ClaimsIdentity.DefaultIssuer, config.Value.Issuer),
                                              new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
                                              new Claim("user_id", user.UserId.ToString()),
-                                             new Claim("tag-name", user.TagName.ToString())
+                                             new Claim("tag_name", user.TagName.ToString())
             };
             for (int i = 0; i < user.Roles.Count; ++i)
             {
