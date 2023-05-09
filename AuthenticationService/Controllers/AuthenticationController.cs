@@ -2,7 +2,6 @@
 using AuthenticationService.Model;
 using AuthenticationService.Services.Authentication;
 using ChatServerApi.Domain.Entity;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthenticationService.Controllers

@@ -23,7 +23,8 @@ namespace AuthenticationService.Security.Token
             List<Claim> claims = new List<Claim> {
                                              new Claim(ClaimsIdentity.DefaultIssuer, config.Value.Issuer),
                                              new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
-                                             new Claim("user_id", user.UserId.ToString())
+                                             new Claim("user_id", user.UserId.ToString()),
+                                             new Claim("tag-name", user.TagName.ToString())
             };
             for (int i = 0; i < user.Roles.Count; ++i)
             {

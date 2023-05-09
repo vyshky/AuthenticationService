@@ -40,13 +40,22 @@ namespace AuthenticationService.Services.Authentication
             IdentificationEntity identification = new IdentificationEntity()
             {
                 UserId = id,
+                TagName = data.TagName,
                 Login = data.UserName,
                 Password = PasswordCrypt.HashPassword(data.Password),
                 Roles = data.Roles
             };
+
             IdentificationEntity findUser = ApplicationDbContext.Identification
                 .FirstOrDefault(x => x.Login == data.UserName);
-            if (findUser != null) return null;
+
+            IdentificationEntity tagName = ApplicationDbContext.Identification
+            .FirstOrDefault(x => x.TagName == data.TagName);
+
+            if (findUser != null || tagName!=null)
+            {
+                return null;
+            }
 
             ApplicationDbContext.User.Add(user);
             var ident = ApplicationDbContext.Identification.Add(identification);
